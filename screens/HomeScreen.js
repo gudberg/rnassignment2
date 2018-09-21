@@ -49,10 +49,10 @@ export default class HomeScreen extends React.Component {
     });
   };
   renderItem = item => {
-    return <Text>Yoyo</Text>;
+    return <Text>{item.item.name.first_name}</Text>;
   };
   renderHeader = headerItem => {
-    return <Text>sweg</Text>;
+    return <Text>{headerItem.section.key}</Text>;
   };
 
   render() {
@@ -82,16 +82,12 @@ export default class HomeScreen extends React.Component {
     console.log("penids");
     return (
       <View style={styles.container}>
-        <SectionList>
-          renderItem=
-          {this.renderItem}
-          renderSectionHeader=
-          {this.renderHeader}
-          sections=
-          {newData}
-          keyExtractor=
-          {item => item.name.first_name}
-        </SectionList>
+        <SectionList
+          renderItem={this.renderItem}
+          renderSectionHeader={this.renderHeader}
+          sections={newData}
+          keyExtractor={item => item.name.first_name}
+        />
       </View>
     );
   }
