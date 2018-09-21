@@ -40,5 +40,8 @@ module.exports = StyleSheet.create({
     marginBottom: 12,
     marginTop: 12,
     borderBottomWidth: 1
+  },
+  header: {
+    fontSize: 20
   }
 });

@@ -49,10 +49,22 @@ export default class HomeScreen extends React.Component {
     });
   };
   renderItem = item => {
-    return <Text>{item.item.name.first_name}</Text>;
+    return (
+      <TouchableOpacity
+        onPress={() => {
+          this.onPress(item.item);
+        }}
+      >
+        <View style={styles.marginalizer}>
+          <Text>
+            {item.item.name.first_name} {item.item.name.last_name}
+          </Text>
+        </View>
+      </TouchableOpacity>
+    );
   };
   renderHeader = headerItem => {
-    return <Text>{headerItem.section.key}</Text>;
+    return <Text style={styles.header}>{headerItem.section.key}</Text>;
   };
 
   render() {
@@ -69,24 +81,20 @@ export default class HomeScreen extends React.Component {
       cc[x.key].push(x);
       return cc;
     }, {});
-
-    Object.keys(data2).forEach(item => {
-      console.log(item);
-    });
     let newData = Object.keys(data2).map(x => {
       obj = { data: data2[x], key: x };
       return obj;
     });
     // ends
-    console.log(newData);
-    console.log("penids");
+    //console.log(newData);
+    //console.log("penids");
     return (
       <View style={styles.container}>
         <SectionList
           renderItem={this.renderItem}
           renderSectionHeader={this.renderHeader}
           sections={newData}
-          keyExtractor={item => item.name.first_name}
+          keyExtractor={item => item.work.email}
         />
       </View>
     );
@@ -102,5 +110,8 @@ const styles = StyleSheet.create({
   },
   marginalizer: {
     margin: 20
+  },
+  header: {
+    fontSize: 20
   }
 });
