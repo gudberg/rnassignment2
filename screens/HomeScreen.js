@@ -48,24 +48,50 @@ export default class HomeScreen extends React.Component {
       );
     });
   };
+  renderItem = item => {
+    return <Text>Yoyo</Text>;
+  };
+  renderHeader = headerItem => {
+    return <Text>sweg</Text>;
+  };
 
   render() {
+    console.log("BLALBLAA");
     const { data, isReady } = this.state;
     data.sort(this.compare);
+    let data2 = data.map(x => {
+      return { ...x, key: x.name.first_name[0] };
+    });
+    data2 = data2.reduce((cc, x) => {
+      if (!cc[x.key]) {
+        cc[x.key] = [];
+      }
+      cc[x.key].push(x);
+      return cc;
+    }, {});
+
+    Object.keys(data2).forEach(item => {
+      console.log(item);
+    });
+    let newData = Object.keys(data2).map(x => {
+      obj = { data: data2[x], key: x };
+      return obj;
+    });
     // ends
-    console.log(data);
+    console.log(newData);
+    console.log("penids");
     return (
       <View style={styles.container}>
-        {/* {this.renderList(this.state.data)} */}
-        {isReady ? (
-          <SectionList
-            renderItem={this.renderList}
-            sections={data}
-            // keyExtractor={(item, index) => item + index}
-          />
-        ) : (
-          <Text> not ready</Text>
-        )}
+        <SectionList>
+          renderItem=
+          {this.renderItem}
+          renderSectionHeader=
+          {this.renderHeader}
+          sections=
+          {newData}
+          keyExtractor=
+          {item => item.name.first_name}
+        </SectionList>
       </View>
     );
   }
