@@ -1,27 +1,30 @@
-import React from "react";
+import React from 'react';
 import {
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-  ActivityIndicator,
-  SectionList
-} from "react-native";
-import wholeData from "../ass2data.json";
+  StyleSheet, Text, TouchableOpacity, View, SectionList,
+} from 'react-native';
+import wholeData from '../ass2data.json';
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  marginalizer: {
+    margin: 20,
+  },
+  header: {
+    fontSize: 20,
+  },
+});
 
 export default class HomeScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       data: wholeData,
-      isReady: false
     };
-  }
-  componentDidMount() {
-    this.setState({
-      isReady: true
-    });
-    this.state.data.sort(this.compare);
   }
 
   // To make the our data fit for SectionList we want to change it's structure.
@@ -32,7 +35,9 @@ export default class HomeScreen extends React.Component {
     // first we make an object of lists where the key is the first
     // letter of each first_name and the data for each key is a list
     // where the first letter in first_name fits the key
-    let fitData = this.state.data.reduce((cc, x) => {
+    const { data } = this.state;
+    data.sort(this.compare);
+    let fitData = data.reduce((cc, x) => {
       const key = x.name.first_name[0];
       if (!cc[key]) {
         cc[key] = [];
@@ -41,8 +46,8 @@ export default class HomeScreen extends React.Component {
       return cc;
     }, {});
     // we convert the object to an array of objects that fits SectionList
-    fitData = Object.keys(fitData).map(x => {
-      obj = { data: fitData[x], key: x };
+    fitData = Object.keys(fitData).map((x) => {
+      const obj = { data: fitData[x], key: x };
       return obj;
     });
     return fitData;
@@ -55,46 +60,43 @@ export default class HomeScreen extends React.Component {
     return 0;
   };
 
-  onPress = item => {
-    this.props.navigation.navigate("Detail", item);
+  onPress = (item) => {
+    const { navigation } = this.props;
+    navigation.navigate('Detail', item);
   };
 
-  renderList = item => {
-    return item.map((item, index, section) => {
-      return (
-        <TouchableOpacity
-          onPress={() => {
-            this.onPress(item);
-          }}
-        >
-          <View style={styles.marginalizer} key={index}>
-            <Text>{item.name.first_name}</Text>
-          </View>
-        </TouchableOpacity>
-      );
-    });
-  };
-  renderItem = item => {
-    return (
-      <TouchableOpacity
-        onPress={() => {
-          this.onPress(item.item);
-        }}
-      >
-        <View style={styles.marginalizer}>
-          <Text>
-            {item.item.name.first_name} {item.item.name.last_name}
-          </Text>
-        </View>
-      </TouchableOpacity>
-    );
-  };
-  renderHeader = headerItem => {
-    return <Text style={styles.header}>{headerItem.section.key}</Text>;
-  };
+  renderList = item => item.map((itm, index) => (
+    <TouchableOpacity
+      onPress={() => {
+        this.onPress(itm);
+      }}
+    >
+      <View style={styles.marginalizer} key={index}>
+        <Text>{item.name.first_name}</Text>
+      </View>
+    </TouchableOpacity>
+  ));
+
+  renderItem = item => (
+    <TouchableOpacity
+      onPress={() => {
+        this.onPress(item.item);
+      }}
+    >
+      <View style={styles.marginalizer}>
+        <Text>
+          {item.item.name.first_name}
+          {' '}
+          {item.item.name.last_name}
+        </Text>
+      </View>
+    </TouchableOpacity>
+  );
+
+  renderHeader = headerItem => <Text style={styles.header}>{headerItem.section.key}</Text>;
 
   render() {
-    let newData = this.fitDataForSectionList();
+    const newData = this.fitDataForSectionList();
 
     return (
       <View style={styles.container}>
@@ -108,18 +110,3 @@ export default class HomeScreen extends React.Component {
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center"
-  },
-  marginalizer: {
-    margin: 20
-  },
-  header: {
-    fontSize: 20
-  }
-});
