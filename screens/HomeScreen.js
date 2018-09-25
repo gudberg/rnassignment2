@@ -4,7 +4,6 @@ import {
   Text,
   TouchableOpacity,
   View,
-  ActivityIndicator,
   SectionList
 } from "react-native";
 import wholeData from "../ass2data.json";
@@ -33,21 +32,6 @@ export default class HomeScreen extends React.Component {
     this.props.navigation.navigate("Detail", item);
   };
 
-  renderList = item => {
-    return item.map((item, index, section) => {
-      return (
-        <TouchableOpacity
-          onPress={() => {
-            this.onPress(item);
-          }}
-        >
-          <View style={styles.marginalizer} key={index}>
-            <Text>{item.name.first_name}</Text>
-          </View>
-        </TouchableOpacity>
-      );
-    });
-  };
   renderItem = item => {
     return (
       <TouchableOpacity
@@ -63,17 +47,19 @@ export default class HomeScreen extends React.Component {
       </TouchableOpacity>
     );
   };
+
   renderHeader = headerItem => {
     return <Text style={styles.header}>{headerItem.section.key}</Text>;
   };
 
   render() {
-    console.log("BLALBLAA");
-    const { data, isReady } = this.state;
+    const { data } = this.state;
     data.sort(this.compare);
+
     let data2 = data.map(x => {
       return { ...x, key: x.name.first_name[0] };
     });
+
     data2 = data2.reduce((cc, x) => {
       if (!cc[x.key]) {
         cc[x.key] = [];
@@ -81,13 +67,13 @@ export default class HomeScreen extends React.Component {
       cc[x.key].push(x);
       return cc;
     }, {});
+
+    console.log(data2);
     let newData = Object.keys(data2).map(x => {
       obj = { data: data2[x], key: x };
       return obj;
     });
-    // ends
-    //console.log(newData);
-    //console.log("penids");
+
     return (
       <View style={styles.container}>
         <SectionList
