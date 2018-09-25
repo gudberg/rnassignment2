@@ -28,8 +28,9 @@ module.exports = StyleSheet.create({
     alignItems: "center"
   },
   imageStyle: {
+    alignSelf: "stretch",
     borderColor: "black",
-    height: 180,
+    height: 80,
     borderWidth: 1
   },
   imageMarginizer: {
