@@ -1,48 +1,48 @@
-const React = require("react-native");
+const React = require('react-native');
 
 const { StyleSheet } = React;
 
 // We use this file for global styling
 module.exports = StyleSheet.create({
   buttonStyle: {
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: 'center',
+    alignItems: 'center',
     marginTop: 2,
     padding: 2,
-    backgroundColor: "lightblue",
-    borderColor: "#333",
+    backgroundColor: 'lightblue',
+    borderColor: '#333',
     borderWidth: 2,
-    borderRadius: 22
+    borderRadius: 22,
   },
   information: {
-    justifyContent: "center",
-    alignItems: "center",
-    marginBottom: 20
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 20,
   },
   text: {
     fontSize: 20,
-    fontWeight: "bold"
+    fontWeight: 'bold',
   },
   names: {
-    justifyContent: "center",
-    alignItems: "center"
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   imageStyle: {
-    alignSelf: "stretch",
-    borderColor: "black",
+    alignSelf: 'stretch',
+    borderColor: 'black',
     height: 80,
-    borderWidth: 1
+    borderWidth: 1,
   },
   imageMarginizer: {
     marginBottom: 12,
-    marginTop: 12
+    marginTop: 12,
   },
   informationStyle: {
     marginBottom: 12,
     marginTop: 12,
-    borderBottomWidth: 1
+    borderBottomWidth: 1,
   },
   header: {
-    fontSize: 20
-  }
+    fontSize: 20,
+  },
 });

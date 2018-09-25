@@ -40,7 +40,7 @@ export default class HomeScreen extends React.Component {
     let fitData = data.reduce((cc, x) => {
       const key = x.name.first_name[0];
       if (!cc[key]) {
-        cc[key] = [];
+        Object.assign(cc, { [key]: [] });
       }
       cc[key].push(x);
       return cc;
@@ -64,18 +64,6 @@ export default class HomeScreen extends React.Component {
     const { navigation } = this.props;
     navigation.navigate('Detail', item);
   };
-
-  renderList = item => item.map((itm, index) => (
-    <TouchableOpacity
-      onPress={() => {
-        this.onPress(itm);
-      }}
-    >
-      <View style={styles.marginalizer} key={index}>
-        <Text>{item.name.first_name}</Text>
-      </View>
-    </TouchableOpacity>
-  ));
 
   renderItem = item => (
     <TouchableOpacity
