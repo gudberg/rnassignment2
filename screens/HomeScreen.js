@@ -12,10 +12,16 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   marginalizer: {
-    margin: 20,
+    marginTop: 10,
   },
   header: {
     fontSize: 20,
+    backgroundColor: '#DFDFDF',
+    fontWeight: 'bold',
+  },
+  seactionListStyle: {
+    width: '80%',
+    padding: 2,
   },
 });
 
@@ -84,14 +90,13 @@ export default class HomeScreen extends React.Component {
   renderHeader = headerItem => <Text style={styles.header}>{headerItem.section.key}</Text>;
 
   render() {
-    const newData = this.fitDataForSectionList();
-
     return (
       <View style={styles.container}>
         <SectionList
+          style={styles.seactionListStyle}
           renderItem={this.renderItem}
           renderSectionHeader={this.renderHeader}
-          sections={newData}
+          sections={this.fitDataForSectionList()}
           keyExtractor={item => item.work.email}
         />
       </View>
