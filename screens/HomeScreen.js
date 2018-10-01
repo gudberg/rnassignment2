@@ -2,6 +2,7 @@ import React from 'react';
 import {
   StyleSheet, Text, TouchableOpacity, View, SectionList,
 } from 'react-native';
+import Swipeable from 'react-native-swipeable';
 import wholeData from '../ass2data.json';
 
 const styles = StyleSheet.create({
@@ -25,11 +26,13 @@ const styles = StyleSheet.create({
   },
 });
 
+const leftContent = <Text>Pull to activate</Text>;
+
 export default class HomeScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      data: wholeData,
+      data: this.fitDataForSectionList(),
     };
   }
 
@@ -41,9 +44,9 @@ export default class HomeScreen extends React.Component {
     // first we make an object of lists where the key is the first
     // letter of each first_name and the data for each key is a list
     // where the first letter in first_name fits the key
-    const { data } = this.state;
-    data.sort(this.compare);
-    let fitData = data.reduce((cc, x) => {
+    // const wholeData = this.state;
+    wholeData.sort(this.compare);
+    let fitData = wholeData.reduce((cc, x) => {
       const key = x.name.first_name[0];
       if (!cc[key]) {
         Object.assign(cc, { [key]: [] });
@@ -71,32 +74,85 @@ export default class HomeScreen extends React.Component {
     navigation.navigate('Detail', item);
   };
 
-  renderItem = item => (
-    <TouchableOpacity
-      onPress={() => {
-        this.onPress(item.item);
-      }}
+  // caps function changes first_name to capital letters
+  caps = (index, section) => {
+    const rightObject = { ...section.data[index] };
+    rightObject.name.first_name = rightObject.name.first_name.toUpperCase();
+    const rightData = [...section.data];
+    rightData[index] = rightObject;
+    const sections = [...this.state.data];
+    const findingIndex = sections.findIndex((item) => {
+      item.title === section.title;
+    });
+    sections[findingIndex] = sections;
+    this.setState({
+      data: sections,
+    });
+  };
+
+  //  deletes chosen name
+  deleteItem = (index, section) => {
+    const rightObject = { ...section };
+    rightObject.data.splice(index, 1);
+    const rightData = [...section.data];
+    rightData[index] = rightObject;
+    const sections = [...this.state.data];
+    const findingIndex = sections.findIndex((item) => {
+      item.title === section.title;
+    });
+    sections[findingIndex] = sections;
+    this.setState({
+      data: sections,
+    });
+  };
+
+  renderItem = ({ item, index, section }) => (
+    <Swipeable
+      leftContent={leftContent}
+      rightButtons={[
+        <TouchableOpacity
+          onPress={() => {
+            this.caps(index, section);
+          }}
+        >
+          <Text>Caps</Text>
+        </TouchableOpacity>,
+        <TouchableOpacity
+          onPress={() => {
+            this.deleteItem(index, section);
+          }}
+        >
+          <Text>Delete</Text>
+        </TouchableOpacity>,
+      ]}
     >
-      <View style={styles.marginalizer}>
-        <Text>
-          {item.item.name.first_name}
-          {' '}
-          {item.item.name.last_name}
-        </Text>
-      </View>
-    </TouchableOpacity>
+      <TouchableOpacity
+        onPress={() => {
+          this.onPress(item);
+        }}
+      >
+        <View style={styles.marginalizer}>
+          <Text>
+            {item.name.first_name}
+            {' '}
+            {item.name.last_name}
+          </Text>
+        </View>
+      </TouchableOpacity>
+    </Swipeable>
   );
 
   renderHeader = headerItem => <Text style={styles.header}>{headerItem.section.key}</Text>;
 
   render() {
+    const { data } = this.state;
     return (
       <View style={styles.container}>
         <SectionList
           style={styles.seactionListStyle}
           renderItem={this.renderItem}
           renderSectionHeader={this.renderHeader}
-          sections={this.fitDataForSectionList()}
+          sections={data}
           keyExtractor={item => item.work.email}
         />
       </View>

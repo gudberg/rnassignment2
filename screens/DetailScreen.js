@@ -2,6 +2,7 @@ import React from 'react';
 import {
   Text, View, Image, StyleSheet,
 } from 'react-native';
+import SwitchScreen from './SwitchScreen';
 // Global styling declared in style
 const globalStyle = require('./styles');
 
@@ -14,34 +15,28 @@ const styles = StyleSheet.create({
   },
 });
 
-//  This component render the detail view
-export default class DetailView extends React.Component {
-  render() {
-    const { navigation } = this.props;
-    const data = navigation.state.params;
-    return (
+//  This component is dumb component and
+// renders the image and the name and then sends
+// data as a props to SwitchScreen which takes care of toggling the Work.js and Home.js
+const DetailView = ({ navigation }) => {
+  const data = navigation.state.params;
+  return (
+    <View style={styles.container}>
       <View style={styles.container}>
-        <View style={globalStyle.information}>
-          <Text style={globalStyle.text}>Detail Information</Text>
-        </View>
-        <View>
+        <View style={{ marginBottom: 20 }}>
           <Image source={{ uri: data.avatar }} style={globalStyle.imageStyle} />
         </View>
-        <View style={globalStyle.informationStyle}>
+        <View style={globalStyle.names}>
           <Text>
-            {' '}
             {data.name.first_name}
             {' '}
             {data.name.last_name}
           </Text>
         </View>
-        <View style={globalStyle.informationStyle}>
-          <Text>{data.home.address}</Text>
-        </View>
-        <View style={globalStyle.informationStyle}>
-          <Text>{data.home.email}</Text>
-        </View>
+        <SwitchScreen data={data} />
       </View>
-    );
-  }
-}
+    </View>
+  );
+};
+
+export default DetailView;
