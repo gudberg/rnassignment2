@@ -36,7 +36,6 @@ class SwitchScreen extends React.Component {
             {toggleComponents ? <Text>Go to Work info</Text> : <Text>Go to Home Info</Text>}
           </TouchableOpacity>
         </View>
-        {' '}
         {toggleComponents ? <Home data={data} /> : <Work data={data} />}
       </View>
     );

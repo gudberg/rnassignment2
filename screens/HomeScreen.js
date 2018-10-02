@@ -76,33 +76,21 @@ export default class HomeScreen extends React.Component {
 
   // caps function changes first_name to capital letters
   caps = (index, section) => {
-    const rightObject = { ...section.data[index] };
-    rightObject.name.first_name = rightObject.name.first_name.toUpperCase();
-    const rightData = [...section.data];
-    rightData[index] = rightObject;
-    const sections = [...this.state.data];
-    const findingIndex = sections.findIndex((item) => {
-      item.title === section.title;
-    });
-    sections[findingIndex] = sections;
+    const { data } = this.state;
+    const person = { ...section.data[index] };
+    person.name.first_name = person.name.first_name.toUpperCase();
+    person.name.last_name = person.name.last_name.toUpperCase();
     this.setState({
-      data: sections,
+      data: [...data],
     });
   };
 
   //  deletes chosen name
   deleteItem = (index, section) => {
-    const rightObject = { ...section };
-    rightObject.data.splice(index, 1);
-    const rightData = [...section.data];
-    rightData[index] = rightObject;
-    const sections = [...this.state.data];
-    const findingIndex = sections.findIndex((item) => {
-      item.title === section.title;
-    });
-    sections[findingIndex] = sections;
+    const { data } = this.state;
+    section.data.splice(index, 1);
     this.setState({
-      data: sections,
+      data: [...data],
     });
   };
 

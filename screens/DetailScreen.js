@@ -22,19 +22,17 @@ const DetailView = ({ navigation }) => {
   const data = navigation.state.params;
   return (
     <View style={styles.container}>
-      <View style={styles.container}>
-        <View style={{ marginBottom: 20 }}>
-          <Image source={{ uri: data.avatar }} style={globalStyle.imageStyle} />
-        </View>
-        <View style={globalStyle.names}>
-          <Text>
-            {data.name.first_name}
-            {' '}
-            {data.name.last_name}
-          </Text>
-        </View>
-        <SwitchScreen data={data} />
+      <View style={{ marginBottom: 20 }}>
+        <Image source={{ uri: data.avatar }} style={globalStyle.imageStyle} />
       </View>
+      <View style={globalStyle.names}>
+        <Text>
+          {data.name.first_name}
+          {' '}
+          {data.name.last_name}
+        </Text>
+      </View>
+      <SwitchScreen data={data} />
     </View>
   );
 };
